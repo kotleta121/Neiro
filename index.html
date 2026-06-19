@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Нейросети в учёбе | Гайд</title>
+  <!-- Шрифты и иконки -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f6f9fc;
+      color: #0b1b2f;
+      line-height: 1.6;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* --- header --- */
+    .header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #1a3a5c, #2b5f8a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+    }
+
+    .header .sub {
+      font-size: 1.2rem;
+      color: #2c4a6a;
+      background: rgba(43, 95, 138, 0.08);
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      display: inline-block;
+      margin-top: 0.5rem;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(43, 95, 138, 0.15);
+    }
+
+    .header p {
+      max-width: 700px;
+      margin: 1.2rem auto 0;
+      color: #1f3b55;
+      font-size: 1.1rem;
+    }
+
+    /* --- карточка-принцип --- */
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+      margin: 3rem 0 4rem;
+    }
+
+    .principle-card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 12px 30px rgba(0, 20, 40, 0.06);
+      transition: all 0.2s ease;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .principle-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(18, 52, 86, 0.08);
+      border-color: #cbddee;
+    }
+
+    .principle-card .icon {
+      font-size: 2.4rem;
+      color: #1f6390;
+      margin-bottom: 0.8rem;
+    }
+
+    .principle-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #0d2a44;
+    }
+
+    .principle-card p {
+      color: #1f3f5c;
+      font-size: 0.98rem;
+    }
+
+    .principle-card .badge {
+      display: inline-block;
+      background: #e5eff7;
+      color: #16547a;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      margin-top: 0.7rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* --- секция "как правильно" --- */
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 3.2rem 0 1.8rem;
+      letter-spacing: -0.01em;
+      color: #0a233b;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-title i {
+      color: #256a96;
+      font-size: 1.8rem;
+    }
+
+    .rule-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .rule-item {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      box-shadow: 0 4px 14px rgba(0, 20, 40, 0.02);
+      border-left: 6px solid #2b7aa2;
+      transition: 0.1s ease;
+    }
+
+    .rule-item .num {
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #25709b;
+      opacity: 0.7;
+      min-width: 2.8rem;
+    }
+
+    .rule-item .content h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0a2b47;
+      margin-bottom: 0.2rem;
+    }
+
+    .rule-item .content p {
+      color: #23486a;
+    }
+
+    .rule-item .content .example {
+      background: #f0f6fd;
+      border-radius: 18px;
+      padding: 0.8rem 1.2rem;
+      margin-top: 0.7rem;
+      font-size: 0.95rem;
+      color: #15415f;
+      border-left: 3px solid #6ba3d0;
+    }
+
+    .rule-item .content .example i {
+      margin-right: 0.5rem;
+      color: #3b7ea8;
+    }
+
+    /* --- этика + чеклист --- */
+    .ethics-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.2rem;
+      margin: 2.8rem 0 3.5rem;
+    }
+
+    .ethics-box, .checklist-box {
+      background: white;
+      border-radius: 28px;
+      padding: 2rem 2rem 2.2rem;
+      box-shadow: 0 10px 28px rgba(0, 20, 40, 0.04);
+      border: 1px solid #e2edf7;
+    }
+
+    .ethics-box h3, .checklist-box h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+      color: #0f304d;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .ethics-box ul, .checklist-box ul {
+      list-style: none;
+    }
+
+    .ethics-box li, .checklist-box li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #ecf3fa;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      color: #1a405f;
+    }
+
+    .ethics-box li i, .checklist-box li i {
+      color: #2a7aa8;
+      margin-top: 0.2rem;
+      width: 1.3rem;
+    }
+
+    .checklist-box li i.fa-check-circle {
+      color: #1f8b4c;
+    }
+
+    .checklist-box li i.fa-circle {
+      color: #b0c9de;
+    }
+
+    /* --- кейсы --- */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0 2.5rem;
+    }
+
+    .case-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.6rem 1.2rem;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0, 20, 40, 0.02);
+      border: 1px solid #ddecf9;
+      transition: 0.2s;
+    }
+
+    .case-card:hover {
+      background: #f5faff;
+      border-color: #7fb6dd;
+    }
+
+    .case-card i {
+      font-size: 2.2rem;
+      color: #1b6999;
+      background: #e4f0fa;
+      padding: 0.6rem;
+      border-radius: 50px;
+      width: 4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .case-card h4 {
+      font-weight: 600;
+      color: #0a2b47;
+      margin-bottom: 0.2rem;
+    }
+
+    .case-card p {
+      font-size: 0.92rem;
+      color: #1f4970;
+    }
+
+    /* --- интерактивный блок (пример промпта) --- */
+    .prompt-block {
+      background: #0b233b;
+      border-radius: 32px;
+      padding: 2rem 2.5rem;
+      margin: 3rem 0 2rem;
+      color: #e3f0fd;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .prompt-block .text {
+      flex: 2;
+      min-width: 220px;
+    }
+
+    .prompt-block .text h3 {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: white;
+    }
+
+    .prompt-block .text p {
+      opacity: 0.8;
+      margin-top: 0.2rem;
+      font-size: 0.98rem;
+    }
+
+    .prompt-block .code {
+      background: #1d3b58;
+      padding: 0.7rem 1.5rem;
+      border-radius: 60px;
+      font-family: 'Inter', monospace;
+      font-weight: 500;
+      color: #b5d6f0;
+      border: 1px solid #3d6c92;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      cursor: default;
+      flex-wrap: wrap;
+    }
+
+    .prompt-block .code i {
+      color: #86c1f0;
+      font-size: 1rem;
+    }
+
+    .btn-copy {
+      background: #2d6b97;
+      border: none;
+      color: white;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-copy:hover {
+      background: #3b82b2;
+    }
+
+    /* --- footer --- */
+    .footer {
+      margin-top: 4rem;
+      text-align: center;
+      color: #2b577c;
+      border-top: 1px solid #d5e4f0;
+      padding-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .footer a {
+      color: #1d5b88;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1.2rem; }
+      .header h1 { font-size: 2.2rem; }
+      .ethics-wrap { grid-template-columns: 1fr; }
+      .prompt-block { flex-direction: column; align-items: stretch; gap: 1rem; }
+      .rule-item { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Шапка -->
+  <div class="header">
+    <h1><i class="fas fa-robot" style="background: none; -webkit-text-fill-color: #2b5f8a; margin-right: 0.3rem;"></i> Нейросети в учёбе</h1>
+    <div class="sub"><i class="fas fa-graduation-cap" style="margin-right: 0.5rem;"></i>Правила, этика, лучшие практики</div>
+    <p>Используй искусственный интеллект как помощника, а не как замену собственному мышлению. Ниже — главные принципы и конкретные примеры.</p>
+  </div>
+
+  <!-- 4 принципа -->
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="icon"><i class="fas fa-lightbulb"></i></div>
+      <h3>Ассистент, не автор</h3>
+      <p>Нейросеть генерирует идеи и черновики. Ты — главный исследователь и редактор.</p>
+      <span class="badge"><i class="far fa-circle-check"></i> Критическое мышление</span>
+    </div>
+    <div class="principle-card">
+      <div class="icon"><i class="fas fa-magnifying-glass"></i></div>
+      <h3>Проверяй факты</h3>
+      <p>ИИ может ошибаться или «галлюцинировать». Всегда перепроверяй данные по первоисточникам.</p>
+      <span class="badge"><i class="fas fa-database"></i> Верификация</span>
+    </div>
+    <div class="principle-card">
+      <div class="icon"><i class="fas fa-pen-fancy"></i></div>
+      <h3>Уточняй запросы</h3>
+      <p>Чем конкретнее промпт, тем качественнее ответ. Добавляй контекст, формат, примеры.</p>
+      <span class="badge"><i class="fas fa-sliders"></i> Инженерия промптов</span>
+    </div>
+    <div class="principle-card">
+      <div class="icon"><i class="fas fa-scale-balanced"></i></div>
+      <h3>Этичное использование</h3>
+      <p>Указывай, что использовал ИИ. Не выдавай сгенерированный текст за свой.</p>
+      <span class="badge"><i class="fas fa-handshake"></i> Академическая честность</span>
+    </div>
+  </div>
+
+  <!-- Правила с примерами -->
+  <div class="section-title"><i class="fas fa-list-check"></i> Как работать с ИИ правильно</div>
+  <div class="rule-block">
+
+    <div class="rule-item">
+      <span class="num">01</span>
+      <div class="content">
+        <h4>Формулируй цель и контекст</h4>
+        <p>Не просто «напиши эссе», а «напиши вступление к эссе по истории для 10 класса, с упором на причины революции».</p>
+        <div class="example"><i class="fas fa-comment"></i> Пример: «Объясни теорему Пифагора так, как будто я 8-классник, с двумя примерами из жизни».</div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="num">02</span>
+      <div class="content">
+        <h4>Используй ИИ для структуры и идей</h4>
+        <p>Попроси нейросеть составить план, список аргументов, вопросы для исследования — это сэкономит время.</p>
+        <div class="example"><i class="fas fa-comment"></i> Пример: «Сгенерируй 5 возможных тем для курсовой по экологии и для каждой — 3 ключевых вопроса».</div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="num">03</span>
+      <div class="content">
+        <h4>Редактируй и адаптируй</h4>
+        <p>Не копируй ответ целиком. Переформулируй, добавь свои мысли, приведи собственные примеры.</p>
+        <div class="example"><i class="fas fa-comment"></i> Пример: возьми сгенерированный абзац и перепиши его в своём стиле, дополнив анализом.</div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="num">04</span>
+      <div class="content">
+        <h4>Проверяй на плагиат и факты</h4>
+        <p>Прогоняй итоговый текст через антиплагиат, а факты сверяй с учебниками или научными статьями.</p>
+        <div class="example"><i class="fas fa-comment"></i> Пример: «Проверь, действительно ли это событие произошло в 1825 году?» — и уточни в надёжном источнике.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Этика + чеклист -->
+  <div class="ethics-wrap">
+    <div class="ethics-box">
+      <h3><i class="fas fa-scale-balanced" style="color: #1f6f9e;"></i> Этические нормы</h3>
+      <ul>
+        <li><i class="fas fa-check-circle" style="color: #1f8b4c;"></i> Всегда указывай, что использовал ИИ-инструменты.</li>
+        <li><i class="fas fa-check-circle" style="color: #1f8b4c;"></i> Не используй нейросеть для сдачи экзаменов / тестов.</li>
+        <li><i class="fas fa-check-circle" style="color: #1f8b4c;"></i> Не вводи в промпт личные данные или конфиденциальную информацию.</li>
+        <li><i class="fas fa-check-circle" style="color: #1f8b4c;"></i> Помни: ИИ — это инструмент, а не замена критическому мышлению.</li>
+      </ul>
+    </div>
+    <div class="checklist-box">
+      <h3><i class="fas fa-clipboard-list" style="color: #1f6f9e;"></i> Чеклист перед сдачей</h3>
+      <ul>
+        <li><i class="fas fa-circle"></i> Я перечитал(а) и переработал(а) сгенерированный текст.</li>
+        <li><i class="fas fa-circle"></i> Я проверил(а) факты и даты.</li>
+        <li><i class="fas fa-circle"></i> Я указал(а) использование ИИ в списке источников.</li>
+        <li><i class="fas fa-circle"></i> В работе есть мои собственные выводы и примеры.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Кейсы использования -->
+  <div class="section-title"><i class="fas fa-brain"></i> Учебные кейсы</div>
+  <div class="cases-grid">
+    <div class="case-card">
+      <i class="fas fa-pen-to-square"></i>
+      <h4>Эссе</h4>
+      <p>Генерация структуры, тезисов, альтернативных аргументов.</p>
+    </div>
+    <div class="case-card">
+      <i class="fas fa-code"></i>
+      <h4>Программирование</h4>
+      <p>Объяснение алгоритмов, отладка, генерация примеров кода.</p>
+    </div>
+    <div class="case-card">
+      <i class="fas fa-language"></i>
+      <h4>Изучение языков</h4>
+      <p>Диалоги, перевод, разбор грамматики, упражнения.</p>
+    </div>
+    <div class="case-card">
+      <i class="fas fa-flask"></i>
+      <h4>Естественные науки</h4>
+      <p>Объяснение формул, моделирование, подбор задач.</p>
+    </div>
+  </div>
+
+  <!-- Интерактивный пример промпта -->
+  <div class="prompt-block">
+    <div class="text">
+      <h3><i class="fas fa-message" style="margin-right: 0.5rem;"></i> Пример хорошего промпта</h3>
+      <p>Скопируй и адаптируй под свою задачу.</p>
+    </div>
+    <div class="code">
+      <i class="fas fa-quote-right"></i>
+      <span id="promptText">Объясни понятие фотосинтеза для 6-го класса. Включи аналогию с кухней и 3 ключевых этапа.</span>
+      <button class="btn-copy" id="copyBtn"><i class="fas fa-copy"></i> Копировать</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <i class="fas fa-robot" style="opacity: 0.5;"></i> Используй нейросети с умом — это твой супер-помощник, а не волшебная палочка. <br />
+    <span style="opacity: 0.6;">© 2026 · Гайд по этичному использованию ИИ в образовании</span>
+  </div>
+
+</div>
+
+<script>
+  document.getElementById('copyBtn').addEventListener('click', function() {
+    const promptText = document.getElementById('promptText').innerText;
+    navigator.clipboard.writeText(promptText).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const original = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+      setTimeout(() => {
+        btn.innerHTML = original;
+      }, 2000);
+    }).catch(() => {
+      alert('Не удалось скопировать, выделите текст вручную.');
+    });
+  });
+</script>
+</body>
+</html>
